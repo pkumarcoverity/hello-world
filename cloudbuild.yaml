@@ -1,0 +1,21 @@
+steps:
+  - name: ubuntu
+    args:
+      - '-c'
+      - >
+        apt update;apt install -y curl ; apt install -y unzip ;
+        curl -fLOsS 'https://sipse.polaris.synopsys.com/api/tools/polaris_cli-linux64.zip' ;
+        unzip polaris_cli-linux64.zip ;
+        rm -rf polaris_cli-linux64.zip 
+    entrypoint: bash
+    timeout: 5000s
+  - name: ubuntu
+    env:
+      - 'POLARIS_ACCESS_TOKEN=${_POLARIS_TOKEN}'
+    args:
+      - '-c'
+      - >
+        apt update ;apt install -y git ;
+        polaris_cli-linux64-2021.12.1/bin/polaris analyze
+    entrypoint: bash
+    timeout: 5000s
